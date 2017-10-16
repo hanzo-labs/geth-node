@@ -5,9 +5,7 @@
   "description": "ethereum reader for hanzo platform",
   "main": "index.js",
   "scripts": {
-    "build": "sake build",
-    "pretest": "sake build",
-    "start": "sake start",
+    "start": "node_modules/.bin/sake start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -21,5 +19,8 @@
     "sake-version": "0.1.19",
     "tar": "4.0.1",
     "typescript": "2.5.3"
+  },
+  "dependencies": {
+    "sake-cli": "0.5.22"
   }
 }

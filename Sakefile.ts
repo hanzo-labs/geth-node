@@ -22,10 +22,6 @@ var gethUriPrefix  = 'https://gethstore.blob.core.windows.net/builds/'
 var gethFilePrefix = 'geth-'
 var gethVersion    = '1.7.2-1db4ecdc'
 
-task('build', (opts) => {
-  exec('tsc')
-})
-
 function downloadGeth(platform: string) {
     exec('mkdir .geth')
 
@@ -44,18 +40,30 @@ function downloadGeth(platform: string) {
     return file
 }
 
-task('start', ['build'], function* (opts) {
+task('start', function* (opts) {
+  console.log(`Starting Geth-Node
+              INSTANCE: ${ process.env.GAE_INSTANCE }
+              GAE_MEMORY_MB: ${ process.env.GAE_MEMORY_MB }
+              GAE_SERVICE: ${ process.env.GAE_SERVICE }
+              GAE_VERSION: ${ process.env.GAE_VERSION }
+              GCLOUD_PROJECT: ${ process.env.GCLOUD_PROJECT }
+              NODE_ENV: ${ process.env.NODE_ENV }
+              PORT: ${ process.env.PORT }
+              `)
   var platform = os.platform()
+  var testnet = (process.env.GAE_SERVICE == 'geth-node-testnet' ? '--testnet' : '')
 
+  console.log(`Downloading Geth for ${ platform }`)
   switch(platform) {
     case 'win32':
-      console.log('not supported')
+      console.log('Windows is not currently supported')
       return
     default:
       try {
         fs.statSync('.geth/geth')
       } catch (e) {
         var file = downloadGeth(platform)
+        console.log('Decompressing Geth')
         tar.x({
           file: file,
           sync: true,
@@ -65,21 +73,26 @@ task('start', ['build'], function* (opts) {
       }
   }
 
-  status = (yield exec.interactive('.geth/geth --testnet --datadir .ethereum')).status
+  console.log('Starting Geth')
+  status = (yield exec.interactive(`.geth/geth ${ testnet } --fast --cache=96 --datadir .ethereum --rpcport ${ process.env.PORT || 8080 }`)).status
 })
 
 task('auth', 'authenticate google sdk', (opts) => {
   exec('gcloud auth login')
 })
 
-task('deploy', 'deploy reader to appengine', ['build'], (opts) => {
-  exec('gcloud app deploy --quiet --project crowdstart-us app.yaml --version=v1')
+task('deploy:testnet', 'deploy reader to appengine', (opts) => {
+  exec('gcloud app deploy --quiet --project crowdstart-us app.testnet.yaml --version=v1')
+})
+
+task('deploy:ethereum', 'deploy reader to appengine', (opts) => {
+  exec('gcloud app deploy --quiet --project crowdstart-us app.ethereum.yaml --version=v1')
 })
 
 task('browse', 'view application from web browser', (opts) => {
-  exec('gcloud app browse -s ethereum-reader --project crowdstart-us app.yaml')
+  exec('gcloud app browse -s geth-node-ethereum --project crowdstart-us app.ethereum.yaml')
 })
 
 task('logs', 'view application logs', (opts) => {
-  exec('gcloud app logs tail -s ethereum-reader --project crowdstart-us app.yaml')
+  exec('gcloud app logs tail -s geth-node-ethereum --project crowdstart-us app.ethereum.yaml')
 })
