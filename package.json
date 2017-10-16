@@ -13,17 +13,13 @@
   "engines": {
     "node": "8.x"
   },
-  "devDependencies": {
-    "fs": "0.0.1-security",
-    "os": "0.1.1",
+  "dependencies": {
     "sake-bundle": "0.6.1",
+    "sake-cli": "0.5.22",
     "sake-core": "1.5.1",
     "sake-outdated": "0.1.28",
     "sake-version": "0.1.19",
     "tar": "4.0.1",
     "typescript": "2.5.3"
-  },
-  "dependencies": {
-    "sake-cli": "0.5.22"
   }
 }
