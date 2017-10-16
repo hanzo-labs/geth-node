@@ -94,5 +94,5 @@ task('browse', 'view application from web browser', (opts) => {
 })
 
 task('logs', 'view application logs', (opts) => {
-  exec('gcloud app logs tail -s geth-node-ethereum --project crowdstart-us app.ethereum.yaml')
+  exec('gcloud app logs tail -s geth-node-ethereum --project crowdstart-us')
 })
