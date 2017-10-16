@@ -1,0 +1,25 @@
+{
+  "name": "geth-node",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "ethereum reader for hanzo platform",
+  "main": "index.js",
+  "scripts": {
+    "build": "sake build",
+    "pretest": "sake build",
+    "start": "sake start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "fs": "0.0.1-security",
+    "os": "0.1.1",
+    "sake-bundle": "0.6.1",
+    "sake-core": "1.5.1",
+    "sake-outdated": "0.1.28",
+    "sake-version": "0.1.19",
+    "tar": "4.0.1",
+    "typescript": "2.5.3"
+  }
+}
