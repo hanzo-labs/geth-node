@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "fs": "0.0.1-security",
+    "fs": "0.0.2",
     "os": "0.1.1",
     "sake-bundle": "0.6.1",
     "sake-core": "1.5.1",
