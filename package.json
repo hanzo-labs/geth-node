@@ -5,11 +5,14 @@
   "description": "ethereum reader for hanzo platform",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/.bin/sake start",
+    "start": "sake start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "8.x"
+  },
   "devDependencies": {
     "fs": "0.0.1-security",
     "os": "0.1.1",
